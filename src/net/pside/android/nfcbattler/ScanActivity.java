@@ -14,15 +14,12 @@ package net.pside.android.nfcbattler;
 
 import android.app.Activity;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 
 public class ScanActivity extends Activity {
@@ -30,6 +27,7 @@ public class ScanActivity extends Activity {
     private final String TAG = "NFC Battler";
 
     private NfcAdapter mAdapter; // 端末のNFCアダプタを提供
+    private Intent mIntent;
     private PendingIntent mPendingIntent;
     private IntentFilter[] mFilters;
     private String[][] mTechLists;
@@ -42,8 +40,9 @@ public class ScanActivity extends Activity {
 
         mAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        mPendingIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        mIntent = new Intent(this, ScanResultActivity.class);
+
+        mPendingIntent = PendingIntent.getActivity(this, 0, mIntent, 0);
 
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try {
@@ -84,39 +83,4 @@ public class ScanActivity extends Activity {
             mAdapter.disableForegroundDispatch(this);
         }
     }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        // TODO Auto-generated method stub
-        super.onNewIntent(intent);
-
-        // Parcelable[] rawMsgs = intent
-        // .getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-        byte[] rawMsgs = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
-
-        Log.v(TAG, "length:" + rawMsgs.length);
-
-        for (int i = 0; i < rawMsgs.length; i++) {
-            Log.v(TAG, "rawMsgs[" + i + "]" + rawMsgs[i]);
-        }
-
-    }
-
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // TODO Auto-generated method stub
-            Log.d(TAG, "  onReceive(" + context + ", " + intent + ")");
-
-            Parcelable[] rawMsgs = intent
-                    .getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-
-            Log.v(TAG, "length:" + rawMsgs.length);
-
-            for (int i = 0; i < rawMsgs.length; i++) {
-                Log.v(TAG, "rawMsgs[" + i + "]" + rawMsgs[i]);
-            }
-        }
-    };
 }
