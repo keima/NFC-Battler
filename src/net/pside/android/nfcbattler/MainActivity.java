@@ -20,7 +20,6 @@ public class MainActivity extends Activity {
 
         button1.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
@@ -31,7 +30,6 @@ public class MainActivity extends Activity {
 
         button2.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(MainActivity.this, BattleActivity.class);
