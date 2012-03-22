@@ -20,7 +20,6 @@ public class MainActivity extends Activity {
 
         button1.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivity(intent);
@@ -30,7 +29,6 @@ public class MainActivity extends Activity {
 
         button2.setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, BattleActivity.class);
                 startActivity(intent);
