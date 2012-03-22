@@ -22,7 +22,6 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivity(intent);
 
@@ -33,7 +32,6 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent intent = new Intent(MainActivity.this, BattleActivity.class);
                 startActivity(intent);
 

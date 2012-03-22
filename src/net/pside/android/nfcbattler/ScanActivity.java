@@ -18,9 +18,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NfcAdapter;
+import android.nfc.tech.NfcA;
+import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
-import android.util.Log;
 
 public class ScanActivity extends Activity {
 
@@ -51,13 +52,17 @@ public class ScanActivity extends Activity {
             throw new RuntimeException("fail", e);
         }
 
+        // どのBroadcastを受け取るか(上で詳細を決めている)
         mFilters = new IntentFilter[] {
                 ndef,
         };
 
+        // どのタイプのカードを読むようにするか
         mTechLists = new String[][] {
                 new String[] {
-                        NfcF.class.getName()
+                        NfcA.class.getName(), // MIFARE
+                        NfcB.class.getName(), // B
+                        NfcF.class.getName(), // FeliCa
                 }
         };
 
@@ -65,9 +70,9 @@ public class ScanActivity extends Activity {
 
     @Override
     protected void onResume() {
-        // TODO Auto-generated method stub
+        // NFC読むスイッチみたいなのをONにする
         super.onResume();
-        Log.v(TAG, "onResume!");
+        // Log.v(TAG, "onResume!");
 
         if (mAdapter != null) {
             mAdapter.enableForegroundDispatch(this, mPendingIntent, mFilters, mTechLists);
@@ -76,8 +81,9 @@ public class ScanActivity extends Activity {
 
     @Override
     protected void onPause() {
+        // NFC読むスイッチみたいなのをOFFにする
         super.onPause();
-        Log.v(TAG, "onPause!");
+        // Log.v(TAG, "onPause!");
 
         if (mAdapter != null) {
             mAdapter.disableForegroundDispatch(this);

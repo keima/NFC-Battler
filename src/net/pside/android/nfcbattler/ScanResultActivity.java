@@ -17,15 +17,6 @@ public class ScanResultActivity extends Activity {
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
-    // private TextView textView1 = (TextView) findViewById(R.id.textView1);
-    // private TextView textView2 = (TextView) findViewById(R.id.textView2);
-    // private TextView textView3 = (TextView) findViewById(R.id.textView3);
-    // private TextView textView4 = (TextView) findViewById(R.id.textView4);
-    // private TextView textView5 = (TextView) findViewById(R.id.textView5);
-    // private TextView textView6 = (TextView) findViewById(R.id.textView6);
-    // private TextView textView7 = (TextView) findViewById(R.id.textView7);
-    // private TextView textView8 = (TextView) findViewById(R.id.textView8);
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +69,7 @@ public class ScanResultActivity extends Activity {
 
             } else {
                 Toast.makeText(this, "申し訳ありませんが別のカードをスキャンしてください", Toast.LENGTH_LONG).show();
+                finish();
             }
 
         }

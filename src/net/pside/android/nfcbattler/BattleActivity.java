@@ -40,13 +40,14 @@ public class BattleActivity extends Activity {
             finish();
         } else {
 
-            String data = null;
+            String data = "";
             for (int i = 0; i < 7; i++) {
                 data += String.valueOf(mPreferences.getInt("PARAM" + i, 0));
                 data += ",";
             }
             Log.v("BattleActivity", "data:" + data);
 
+            // TODO このへんをなんとかする
             NdefMessage message = new NdefMessage(
                     new NdefRecord[] {
                             createMimeRecord("application/net.pside.android.nfcbattler",
