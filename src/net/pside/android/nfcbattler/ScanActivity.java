@@ -18,8 +18,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NfcAdapter;
-import android.nfc.tech.NfcA;
-import android.nfc.tech.NfcB;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
 
@@ -60,8 +58,9 @@ public class ScanActivity extends Activity {
         // どのタイプのカードを読むようにするか
         mTechLists = new String[][] {
                 new String[] {
-                        NfcA.class.getName(), // MIFARE
-                        NfcB.class.getName(), // B
+                        // ここ書き方間違えているかもしれない。
+                        // NfcA.class.getName(), // MIFARE
+                        // NfcB.class.getName(), // B
                         NfcF.class.getName(), // FeliCa
                 }
         };
