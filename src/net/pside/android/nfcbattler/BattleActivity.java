@@ -29,6 +29,9 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
     private NfcAdapter mAdapter;
     private SharedPreferences mPreferences;
 
+    private boolean mIsGetEnemyData = false;
+    private boolean mIsSentMyData = false;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,14 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
             // mAdapter.setNdefPushMessage(message, this);
 
         }
+
+        String data = "";
+        for (int i = 0; i < 7; i++) {
+            data += String.valueOf(mPreferences.getInt("PARAM" + i, 0));
+            data += ",";
+        }
+        Log.i("BattleActivity", "data:" + data);
+
     }
 
     /**
@@ -81,13 +92,20 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
      * OnNdefPushCompleteCallbackインターフェースの実装 (Pushが終わると同時に開始される)
      */
     public void onNdefPushComplete(NfcEvent event) {
-        // TODO Auto-generated method stub
+        /*
+         * Beamを送りつけたら呼ばれるのがこちら
+         */
+        mIsSentMyData = true;
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        /*
+         * Beamを受け取ったらよばれるのがこちら
+         */
 
         // アクティビティがAndroid Beamによって開始されたことをチェックする
         Intent intent = getIntent();
@@ -102,6 +120,8 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
             Toast.makeText(this, new String(msg.getRecords()[0].getPayload()), Toast.LENGTH_LONG)
                     .show();
             Log.v("BattleActivity", new String(msg.getRecords()[0].getPayload()));
+
+            mIsGetEnemyData = true;
         }
     }
 
