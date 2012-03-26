@@ -2,7 +2,170 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+    android:orientation="vertical" android:gravity="center">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="？" android:textSize="200dp"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="9" >
+
+
+
+        <Space
+            android:layout_gravity="fill_horizontal"
+            android:layout_column="0"
+            android:layout_row="0" />
+
+        <TextView
+            android:layout_column="1"
+            android:layout_row="0"
+            android:layout_marginRight="6dp"
+            android:layout_marginLeft="6dp"
+            android:text="@string/textMe" />
+        
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_column="2"
+            android:layout_row="0"
+            android:layout_marginRight="6dp"
+            android:layout_marginLeft="6dp"
+            android:text="@string/textEnemy" />
+        
+        
+        
+        <TextView
+            android:layout_column="0"
+            android:layout_row="1"
+            android:text="@string/textStatusName1" />
+        
+        <TextView
+            android:id="@+id/textMyParam1"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:text="..." />
+        
+        <TextView
+            android:id="@+id/textEnemyParam1"
+            android:layout_column="2"
+            android:layout_row="1"
+            android:text="..." />
+        
+        
+        
+        <TextView
+            android:layout_column="0"
+            android:layout_row="2"
+            android:text="@string/textStatusName2" />
+        <TextView
+            android:id="@+id/textMyParam2"
+            android:layout_column="1"
+            android:layout_row="2"
+            android:text="..." />
+        
+        <TextView
+            android:id="@+id/textEnemyParam2"
+            android:layout_column="2"
+            android:layout_row="2"
+            android:text="..." />
+        
+        
+        
+        <TextView
+            android:layout_column="0"
+            android:layout_row="3"
+            android:text="@string/textStatusName3" />
+        
+        <TextView
+            android:id="@+id/textMyParam3"
+            android:layout_column="1"
+            android:layout_row="3"
+            android:text="..." />
+        
+        <TextView
+            android:id="@+id/textEnemyParam3"
+            android:layout_column="2"
+            android:layout_row="3"
+            android:text="..." />
+        
+        
+        <TextView
+            android:layout_column="0"
+            android:layout_row="4"
+            android:text="@string/textStatusName4" />
+        
+        <TextView
+            android:id="@+id/textMyParam4"
+            android:layout_column="1"
+            android:layout_row="4"
+            android:text="..." />
+        
+        <TextView
+            android:id="@+id/textEnemyParam4"
+            android:layout_column="2"
+            android:layout_row="4"
+            android:text="..." />
+        
+        
+        <TextView
+            android:layout_column="0"
+            android:layout_row="5"
+            android:text="@string/textStatusName5" />
+        
+        <TextView
+            android:id="@+id/textMyParam5"
+            android:layout_column="1"
+            android:layout_row="5"
+            android:text="..." />
+        
+        <TextView
+            android:id="@+id/textEnemyParam5"
+            android:layout_column="2"
+            android:layout_row="5"
+            android:text="..." />
+        
+        
+        <TextView
+            android:layout_column="0"
+            android:layout_row="6"
+            android:text="@string/textStatusName6" />
+        
+        <TextView
+            android:id="@+id/textMyParam6"
+            android:layout_column="1"
+            android:layout_row="6"
+            android:text="..." />
+        
+        <TextView
+            android:id="@+id/textEnemyParam6"
+            android:layout_column="2"
+            android:layout_row="6"
+            android:text="..." />
+        
+        
+        <TextView
+            android:layout_column="0"
+            android:layout_row="7"
+            android:text="@string/textStatusName7" />
+        
+        <TextView
+            android:id="@+id/textMyParam7"
+            android:layout_column="1"
+            android:layout_row="7"
+            android:text="..." />
+        
+        <TextView
+            android:id="@+id/textEnemyParam7"
+            android:layout_column="2"
+            android:layout_row="7"
+            android:text="..." />
+        
+    </GridLayout>
 
 </LinearLayout>

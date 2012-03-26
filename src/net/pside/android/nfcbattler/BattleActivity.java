@@ -133,6 +133,20 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
     }
 
     /**
+     * 2つのbooleanを比較して、双方とも真であればActivityを切り替える
+     * 
+     * @param boolean, boolean
+     */
+    private void createResultActivity(boolean param1, boolean param2) {
+        /* 双方とも真であればActivity起動 */
+        if (param1 & param2) {
+            Intent intent = new Intent(this, BattleResultActivity.class);
+            // TODO ここでExtra格納せんとまずい
+            startActivity(intent);
+        }
+    }
+
+    /**
      * NDEFレコード内にカスタムMIMEタイプをカプセル化して生成する
      * 
      * @param mimeType

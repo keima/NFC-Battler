@@ -16,42 +16,42 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="あたまのよさ：" />
+        android:text="@string/textStatusName1" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="かっこよさ：" />
+        android:text="@string/textStatusName2" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ちからづよさ：" />
+        android:text="@string/textStatusName3" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="すばやさ：" />
+        android:text="@string/textStatusName4" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="がまんづよさ：" />
+        android:text="@string/textStatusName5" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="りょうりスキル：" />
+        android:text="@string/textStatusName6" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="あしのくささ：" />
+        android:text="@string/textStatusName7" />
 
 </LinearLayout>

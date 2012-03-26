@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, NFCBattlerActivity!</string>
     <string name="app_name">NFC Battler</string>
+    
+    <string name="textMe">自分</string>
+    <string name="textEnemy">相手</string>
+    
+    <string name="textStatusName1">あたまのよさ：</string>
+    <string name="textStatusName2">かっこよさ：</string>
+    <string name="textStatusName3">ちからづよさ：</string>
+    <string name="textStatusName4">すばやさ：</string>
+    <string name="textStatusName5">がまんづよさ：</string>
+    <string name="textStatusName6">りょうりスキル：</string>
+    <string name="textStatusName7">あしのくささ：</string>
+    
+    
 
 </resources>
