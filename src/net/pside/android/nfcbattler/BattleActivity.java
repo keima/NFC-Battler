@@ -32,6 +32,8 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
     private boolean mIsGetEnemyData = false;
     private boolean mIsSentMyData = false;
 
+    private String enemyData = "";
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,7 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
          * Beamを送りつけたら呼ばれるのがこちら
          */
         mIsSentMyData = true;
+        createResultActivity(mIsSentMyData, mIsGetEnemyData);
 
     }
 
@@ -121,7 +124,10 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
                     .show();
             Log.v("BattleActivity", new String(msg.getRecords()[0].getPayload()));
 
+            enemyData = new String(msg.getRecords()[0].getPayload());
+
             mIsGetEnemyData = true;
+            createResultActivity(mIsSentMyData, mIsGetEnemyData);
         }
     }
 
@@ -142,6 +148,10 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
         if (param1 & param2) {
             Intent intent = new Intent(this, BattleResultActivity.class);
             // TODO ここでExtra格納せんとまずい
+
+            intent.putExtra("EnemyData", enemyData);
+
+            Log.v("BattleActivity", "ResultActivity!");
             startActivity(intent);
         }
     }
