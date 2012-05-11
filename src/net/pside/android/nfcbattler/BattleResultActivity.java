@@ -12,6 +12,26 @@ public class BattleResultActivity extends Activity {
     private int mWinCount = 0;
     private SharedPreferences mPreferences = null;
 
+    private static final int[] textMyID = {
+            R.id.textMyParam1,
+            R.id.textMyParam2,
+            R.id.textMyParam3,
+            R.id.textMyParam4,
+            R.id.textMyParam5,
+            R.id.textMyParam6,
+            R.id.textMyParam7,
+    };
+
+    private static final int[] textEnemyID = {
+            R.id.textEnemyParam1,
+            R.id.textEnemyParam2,
+            R.id.textEnemyParam3,
+            R.id.textEnemyParam4,
+            R.id.textEnemyParam5,
+            R.id.textEnemyParam6,
+            R.id.textEnemyParam7,
+    };
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,6 +46,13 @@ public class BattleResultActivity extends Activity {
             String[] enemyData = enemyDataStr.split(",");
 
             for (int i = 0; i < enemyData.length; i++) {
+
+                TextView textMy = (TextView) findViewById(textMyID[i]);
+                TextView textEnemy = (TextView) findViewById(textEnemyID[i]);
+
+                textMy.setText(String.valueOf(mPreferences.getInt("PARAM" + i, 0)));
+                textEnemy.setText(enemyData[i]);
+
                 if (mPreferences.getInt("PARAM" + i, 0) > Integer.parseInt(enemyData[i])) {
                     mWinCount++;
                 } else {

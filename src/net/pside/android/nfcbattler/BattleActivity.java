@@ -72,7 +72,6 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
      * CreateNdefMessageCallbackインターフェースの実装
      */
     public NdefMessage createNdefMessage(NfcEvent event) {
-        // TODO Auto-generated method stub
 
         String data = "";
         for (int i = 0; i < 7; i++) {
@@ -81,9 +80,10 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
         }
         Log.v("BattleActivity", "data:" + data);
 
+        // 送信するデータパケットを作成
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] {
-                        createMimeRecord("application/com.example.android.beam",
+                        createMimeRecord("application/net.pside.android.nfcbattler",
                                 data.getBytes())
                 });
 
@@ -97,6 +97,7 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
         /*
          * Beamを送りつけたら呼ばれるのがこちら
          */
+
         mIsSentMyData = true;
         createResultActivity(mIsSentMyData, mIsGetEnemyData);
 
@@ -131,11 +132,37 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
         }
     }
 
+    // TODO:これ使ってるかどうか検証しなければ
     @Override
     protected void onNewIntent(Intent intent) {
-        // TODO Auto-generated method stub
-        // super.onNewIntent(intent);
         setIntent(intent);
+        Log.i("BattleActivity", "onNewIntent is called.");
+    }
+
+    /**
+     * 状態を短期保存する
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // TODO Auto-generated method stub
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("IsGetEnemyData", mIsGetEnemyData);
+        outState.putBoolean("IsSentMyData", mIsSentMyData);
+
+    }
+
+    /**
+     * 保存した状態をロードする
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onRestoreInstanceState(savedInstanceState);
+
+        mIsGetEnemyData = savedInstanceState.getBoolean("IsGetEnemyData");
+        mIsSentMyData = savedInstanceState.getBoolean("IsSentMyData");
+
     }
 
     /**

@@ -47,7 +47,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="application/com.example.android.beam" />
+                <data android:mimeType="application/net.pside.android.nfcbattler" />
             </intent-filter>
         </activity>
         <activity
