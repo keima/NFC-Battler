@@ -38,9 +38,7 @@ public class ScanActivity extends Activity {
         setContentView(R.layout.scan);
 
         mAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        mIntent = new Intent(this, ScanResultActivity.class);
-
+        mIntent = new Intent(ScanActivity.this, ScanResultActivity.class);
         mPendingIntent = PendingIntent.getActivity(this, 0, mIntent, 0);
 
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);

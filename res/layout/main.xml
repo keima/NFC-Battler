@@ -10,10 +10,11 @@
         android:layout_height="wrap_content"
         android:text="カードのスキャン" />
 
-    <Button
-        android:id="@+id/button2"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="バトル" />
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>
