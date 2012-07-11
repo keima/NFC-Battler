@@ -41,6 +41,9 @@ public class MainActivity extends Activity implements CreateNdefMessageCallback,
         });
     }
 
+    /**
+     * Viewオブジェクトの初期化とNFC初期化
+     */
     private void initializeView() {
         mManager = new PreferencesManager(this);
         if (mManager.getIsMyStatus() == false) {
