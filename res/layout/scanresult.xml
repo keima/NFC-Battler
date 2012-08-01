@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/textFinishStoringData"
+                android:text="@string/textDataSetComplete"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
@@ -69,6 +69,6 @@
         android:id="@+id/button_gotomain"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/buttonFinishText" />
+        android:text="@string/buttonFinish" />
 
 </LinearLayout>
