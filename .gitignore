@@ -18,7 +18,6 @@ local.properties
 
 # Global/Eclipse.gitignore
 *.pydevproject
-.project
 .metadata
 bin/**
 tmp/**
