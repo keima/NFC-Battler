@@ -13,6 +13,8 @@
     <string name="textStatusName5">がまんづよさ：</string>
     <string name="textStatusName6">りょうりスキル：</string>
     <string name="textStatusName7">あしのくささ：</string>
+    <string name="textFinishStoringData">データセット完了！</string>
+    <string name="buttonFinishText">Finish</string>
     <string name="textDeviceBeam">端末同士を重ねてください</string>
     <string name="textCardScan">カードのスキャン</string>
     <string name="textDataSetComplete">データセット完了！</string>
