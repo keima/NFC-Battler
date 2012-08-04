@@ -48,6 +48,9 @@ public class MainActivity extends Activity implements CreateNdefMessageCallback,
     private void initializeView() {
         mDataStore = new DataStore(this);
         textDataMessage = (TextView) findViewById(R.id.textView1);
+        // テキストにフォーカスを当ててmarqueeを実現する。詳しくは：
+        // http://androside.com/page_contents/page_android_textViewMarquee.html
+        // textDataMessage.requestFocus();
 
         if (mDataStore.getIsMyStatus() == false) {
             // データが存在しない状態の時

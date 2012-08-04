@@ -20,6 +20,7 @@ import android.content.IntentFilter.MalformedMimeTypeException;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
+import android.util.Log;
 
 public class ScanActivity extends Activity {
 
@@ -78,7 +79,7 @@ public class ScanActivity extends Activity {
     protected void onPause() {
         // NFC読むスイッチみたいなのをOFFにする
         super.onPause();
-        // Log.v(TAG, "onPause!");
+        Log.v("ScanActivity", "onPause");
 
         if (mAdapter != null) {
             mAdapter.disableForegroundDispatch(this);
