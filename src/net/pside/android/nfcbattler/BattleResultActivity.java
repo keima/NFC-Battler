@@ -2,15 +2,13 @@
 package net.pside.android.nfcbattler;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.widget.TextView;
 
 public class BattleResultActivity extends Activity {
 
     private int mWinCount = 0;
-    private SharedPreferences mPreferences = null;
+    private DataStore mDataStore;
 
     private static final int[] textMyID = {
             R.id.textMyParam1,
@@ -38,22 +36,30 @@ public class BattleResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.battleresult);
 
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mDataStore = new DataStore(this);
+
+        resetTransferLog();
+
         Bundle extra = getIntent().getExtras();
 
         if (extra != null) {
+            // EnemyDataの整形
             String enemyDataStr = extra.getString("EnemyData");
             String[] enemyData = enemyDataStr.split(",");
+
+            // MyDataの整形
+            String myDataStr = mDataStore.getMyStatusForString();
+            String[] myData = myDataStr.split(",");
 
             for (int i = 0; i < enemyData.length; i++) {
 
                 TextView textMy = (TextView) findViewById(textMyID[i]);
                 TextView textEnemy = (TextView) findViewById(textEnemyID[i]);
 
-                textMy.setText(String.valueOf(mPreferences.getInt("PARAM" + i, 0)));
+                textMy.setText(myData[i]);
                 textEnemy.setText(enemyData[i]);
 
-                if (mPreferences.getInt("PARAM" + i, 0) > Integer.parseInt(enemyData[i])) {
+                if (Integer.parseInt(myData[i]) > Integer.parseInt(enemyData[i])) {
                     mWinCount++;
                 } else {
                     // nothing
@@ -69,5 +75,11 @@ public class BattleResultActivity extends Activity {
             }
 
         }
+    }
+
+    private void resetTransferLog() {
+        NfcTransferTemp transferTemp = new NfcTransferTemp();
+        transferTemp.setIsSent(false);
+        transferTemp.setIsReceived(false);
     }
 }

@@ -10,7 +10,6 @@ import java.nio.charset.Charset;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -19,7 +18,6 @@ import android.nfc.NfcAdapter.OnNdefPushCompleteCallback;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,10 +25,7 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
         OnNdefPushCompleteCallback {
 
     private NfcAdapter mAdapter;
-    private SharedPreferences mPreferences;
-
-    private boolean mIsGetEnemyData = false;
-    private boolean mIsSentMyData = false;
+    private DataStore mDataStore;
 
     private String enemyData = "";
 
@@ -40,11 +35,10 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.battle);
 
-        // sharedprefからデータ回収
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mDataStore = new DataStore(this);
 
         // パラメータ値がないとき
-        if (mPreferences.getInt("PARAM1", 0) == 0) {
+        if (mDataStore.getIsMyStatus() == false) {
             Toast.makeText(this, "さきにスキャンしなはれ", Toast.LENGTH_LONG).show();
             finish();
         } else {
@@ -55,17 +49,7 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
             mAdapter.setNdefPushMessageCallback(this, this);
             // メッセージ送信後のコールバック登録
             mAdapter.setOnNdefPushCompleteCallback(this, this);
-            // mAdapter.setNdefPushMessage(message, this);
-
         }
-
-        String data = "";
-        for (int i = 0; i < 7; i++) {
-            data += String.valueOf(mPreferences.getInt("PARAM" + i, 0));
-            data += ",";
-        }
-        Log.i("BattleActivity", "data:" + data);
-
     }
 
     /**
@@ -73,12 +57,7 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
      */
     public NdefMessage createNdefMessage(NfcEvent event) {
 
-        String data = "";
-        for (int i = 0; i < 7; i++) {
-            data += String.valueOf(mPreferences.getInt("PARAM" + i, 0));
-            data += ",";
-        }
-        Log.v("BattleActivity", "data:" + data);
+        String data = mDataStore.getMyStatusForString();
 
         // 送信するデータパケットを作成
         NdefMessage msg = new NdefMessage(
@@ -98,8 +77,10 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
          * Beamを送りつけたら呼ばれるのがこちら
          */
 
-        mIsSentMyData = true;
-        createResultActivity(mIsSentMyData, mIsGetEnemyData);
+        NfcTransferTemp transferTemp = new NfcTransferTemp();
+        transferTemp.setIsSent(true);
+
+        createResultActivity(transferTemp.getIsSent(), transferTemp.getIsReceived());
 
     }
 
@@ -112,27 +93,23 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
          */
 
         // アクティビティがAndroid Beamによって開始されたことをチェックする
-        Intent intent = getIntent();
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
-            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            Parcelable[] rawMsgs = getIntent().getParcelableArrayExtra(
                     NfcAdapter.EXTRA_NDEF_MESSAGES);
             // ビームの送信中は一つだけのメッセージ
             NdefMessage msg = (NdefMessage) rawMsgs[0];
             // 現在は、レコード0はMIMEタイプを含む、レコード1はAARを含む
             // textView.setText(new String(msg.getRecords()[0].getPayload()));
 
-            Toast.makeText(this, new String(msg.getRecords()[0].getPayload()), Toast.LENGTH_LONG)
-                    .show();
-            Log.v("BattleActivity", new String(msg.getRecords()[0].getPayload()));
-
             enemyData = new String(msg.getRecords()[0].getPayload());
 
-            mIsGetEnemyData = true;
-            createResultActivity(mIsSentMyData, mIsGetEnemyData);
+            NfcTransferTemp transferTemp = new NfcTransferTemp();
+            transferTemp.setIsReceived(true);
+
+            createResultActivity(transferTemp.getIsSent(), transferTemp.getIsReceived());
         }
     }
 
-    // TODO:これ使ってるかどうか検証しなければ
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
@@ -144,11 +121,12 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        // TODO Auto-generated method stub
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean("IsGetEnemyData", mIsGetEnemyData);
-        outState.putBoolean("IsSentMyData", mIsSentMyData);
+        // outState.putBoolean("IsGetEnemyData", mIsGetEnemyData);
+        // outState.putBoolean("IsSentMyData", mIsSentMyData);
+
+        Log.v("foobar", "onSave!!!!!");
 
     }
 
@@ -157,11 +135,12 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onRestoreInstanceState(savedInstanceState);
 
-        mIsGetEnemyData = savedInstanceState.getBoolean("IsGetEnemyData");
-        mIsSentMyData = savedInstanceState.getBoolean("IsSentMyData");
+        // mIsGetEnemyData = savedInstanceState.getBoolean("IsGetEnemyData");
+        // mIsSentMyData = savedInstanceState.getBoolean("IsSentMyData");
+
+        Log.v("foobar", "onLoad!!!!!");
 
     }
 
@@ -174,7 +153,6 @@ public class BattleActivity extends Activity implements CreateNdefMessageCallbac
         /* 双方とも真であればActivity起動 */
         if (param1 & param2) {
             Intent intent = new Intent(this, BattleResultActivity.class);
-            // TODO ここでExtra格納せんとまずい
 
             intent.putExtra("EnemyData", enemyData);
 

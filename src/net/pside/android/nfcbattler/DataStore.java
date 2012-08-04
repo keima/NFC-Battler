@@ -4,14 +4,25 @@ package net.pside.android.nfcbattler;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
-public class PreferencesManager extends Object {
+public class DataStore extends Object {
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
-    public PreferencesManager(Context context) {
+    public DataStore(Context context) {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    /**
+     * ログをはき出す（ずぼら用）
+     * 
+     * @param String
+     */
+    private void LogV(String msg) {
+        Log.v("DataStore", msg);
+
     }
 
     /**
@@ -24,6 +35,8 @@ public class PreferencesManager extends Object {
 
         mEditor.putBoolean("IS_MY_STATUS", bool);
         mEditor.commit();
+
+        LogV("setIsMyStatus:" + bool);
     }
 
     /**
@@ -32,7 +45,11 @@ public class PreferencesManager extends Object {
      * @return
      */
     public Boolean getIsMyStatus() {
-        return mPreferences.getBoolean("IS_MY_STATUS", false);
+        Boolean ret = mPreferences.getBoolean("IS_MY_STATUS", false);
+
+        LogV("getIsMyStatus:" + ret);
+
+        return ret;
     }
 
     /**

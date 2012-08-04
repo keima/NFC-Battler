@@ -12,6 +12,7 @@ import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcAdapter.OnNdefPushCompleteCallback;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -19,11 +20,10 @@ import android.widget.TextView;
 public class MainActivity extends Activity implements CreateNdefMessageCallback,
         OnNdefPushCompleteCallback {
 
-    private PreferencesManager mManager;
+    private DataStore mDataStore;
     private TextView textDataMessage;
     private NfcAdapter mAdapter;
 
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +31,7 @@ public class MainActivity extends Activity implements CreateNdefMessageCallback,
 
         initializeView();
 
+        // カードスキャンボタンのクリックリスナー
         findViewById(R.id.button1).setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
@@ -42,17 +43,17 @@ public class MainActivity extends Activity implements CreateNdefMessageCallback,
     }
 
     /**
-     * Viewオブジェクトの初期化とNFC初期化
+     * オブジェクトの初期化とNFC初期化
      */
     private void initializeView() {
-        mManager = new PreferencesManager(this);
-        if (mManager.getIsMyStatus() == false) {
-            // データが存在しない状態の時
+        mDataStore = new DataStore(this);
+        textDataMessage = (TextView) findViewById(R.id.textView1);
 
+        if (mDataStore.getIsMyStatus() == false) {
+            // データが存在しない状態の時
+            textDataMessage.setText("さぁカードを登録しましょう！");
         } else {
             // データが存在するとき
-
-            textDataMessage = (TextView) findViewById(R.id.textView1);
             textDataMessage.setText("端末同士をかざしてバトル開始！");
 
             // mAdapter == null だとNFC非対応であると判断できるらしい
@@ -61,7 +62,6 @@ public class MainActivity extends Activity implements CreateNdefMessageCallback,
             mAdapter.setNdefPushMessageCallback(this, this);
             // メッセージ送信後のコールバック登録
             mAdapter.setOnNdefPushCompleteCallback(this, this);
-            // mAdapter.setNdefPushMessage(message, this);
         }
     }
 
@@ -71,16 +71,18 @@ public class MainActivity extends Activity implements CreateNdefMessageCallback,
 
         initializeView();
 
+        Log.v("MainActivity", "onNewIntent!");
+
     }
 
     /**
      * CreateNdefMessageCallbackインターフェースの実装
      */
     public NdefMessage createNdefMessage(NfcEvent event) {
-        mManager = new PreferencesManager(this);
+        mDataStore = new DataStore(this);
 
         // データ本体を整形(しなくても良くなった)
-        String data = mManager.getMyStatusForString();
+        String data = mDataStore.getMyStatusForString();
 
         // 送信するデータパケットを作成
         NdefMessage msg = new NdefMessage(
@@ -99,6 +101,14 @@ public class MainActivity extends Activity implements CreateNdefMessageCallback,
         /*
          * Beamを送りつけたら呼ばれるのがこちら
          */
+        NfcTransferTemp transferTemp = new NfcTransferTemp();
+
+        Log.v("hogehoge", "Send!!!!!");
+
+        transferTemp.setIsSent(true);
+
+        Intent intent = new Intent(MainActivity.this, BattleActivity.class);
+        startActivity(intent);
 
         // mIsSentMyData = true;
         // createResultActivity(mIsSentMyData, mIsGetEnemyData);

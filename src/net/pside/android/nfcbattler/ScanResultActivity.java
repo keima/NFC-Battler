@@ -12,10 +12,8 @@ import android.widget.Toast;
 
 public class ScanResultActivity extends Activity {
 
-    private static final String TAG = "ScanResultActivity";
-
     private Bundle mBundle;
-    private PreferencesManager pm;
+    private DataStore mDataStore;
 
     /** Called when the activity is first created. */
     @Override
@@ -60,8 +58,8 @@ public class ScanResultActivity extends Activity {
                 }
                 param[7] = 0;// 意味あるのかどうか分からない。
 
-                pm = new PreferencesManager(this);
-                pm.setMyStatus(param);
+                mDataStore = new DataStore(this);
+                mDataStore.setMyStatus(param);
 
                 for (int i = 0; i < 7; i++) {
                     textViews[i].append(String.valueOf(param[i]));

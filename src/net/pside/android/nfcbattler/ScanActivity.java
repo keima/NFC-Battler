@@ -23,8 +23,6 @@ import android.os.Bundle;
 
 public class ScanActivity extends Activity {
 
-    private final String TAG = "NFC Battler";
-
     private NfcAdapter mAdapter; // 端末のNFCアダプタを提供
     private Intent mIntent;
     private PendingIntent mPendingIntent;
