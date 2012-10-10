@@ -74,7 +74,6 @@ public class ScanResultActivity extends Activity {
 
         findViewById(R.id.button_gotomain).setOnClickListener(new OnClickListener() {
 
-            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ScanResultActivity.this, MainActivity.class);
                 startActivity(intent);
